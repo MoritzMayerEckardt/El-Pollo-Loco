@@ -42,20 +42,24 @@ class World {
 
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);        // verschiebt das Objekt um die Breite des jeweiligen Elements
-            this.ctx.scale(-1, 1);                  // spiegelt das Objekt an der y-Achse
-            mo.x = mo.x * -1;                       // dreht die Richtung der x-Achse um 180 Grad
+            this.flipImage(mo);
         }
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '5';
-        this.ctx.strokeStyle = 'red';
-        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
-        this.ctx.stroke();
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height)
+        mo.drawFrame(this.ctx);
+        mo.draw(this.ctx);
         if (mo.otherDirection) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(mo);
         }
+    }
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);        // verschiebt das Objekt um die Breite des jeweiligen Elements
+        this.ctx.scale(-1, 1);                  // spiegelt das Objekt an der y-Achse
+        mo.x = mo.x * -1;                       // dreht die Richtung der x-Achse um 180 Grad
+    }
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 }
