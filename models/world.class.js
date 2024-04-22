@@ -13,7 +13,8 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();                        
+        this.checkCollisions();  
+        this.checkCoins();                      
     }
 
     setWorld() {
@@ -32,6 +33,15 @@ class World {
         }, 200);
     }
 
+    checkCoins() {
+        setInterval(() => {
+            this.level.coins.forEach((coin) => {
+                if (this.character.isColliding(coin)) {
+                 }
+            });
+        }, 200);
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -42,8 +52,9 @@ class World {
         this.addToMap(this.statusBar)
         this.ctx.translate(this.camera_x, 0);
 
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.coins);
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);
 
