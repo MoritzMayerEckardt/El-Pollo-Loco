@@ -47,6 +47,11 @@ class World {
             this.ctx.scale(-1, 1);                  // spiegelt das Objekt an der y-Achse
             mo.x = mo.x * -1;                       // dreht die Richtung der x-Achse um 180 Grad
         }
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '5';
+        this.ctx.strokeStyle = 'red';
+        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+        this.ctx.stroke();
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height)
         if (mo.otherDirection) {
             mo.x = mo.x * -1;
