@@ -1,12 +1,12 @@
-class Coin extends MovableObject {
-    y = 320;
+class Bottle extends MovableObject {
+    y = 380;
     x = 500 + Math.random() * 1500;
-    width = 150;
-    height = 150;
+    width = 60;
+    height = 70;
 
     IMAGES = [
-        'img/8_coin/coin_1.png',
-        'img/8_coin/coin_2.png',
+        'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
+        'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
     ]
 
     constructor() {

@@ -8,6 +8,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new statusBarCoin();
     statusBarBottle = new StatusBarBottle();
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -15,7 +16,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();  
+        this.run();  
         this.checkCoins();                      
     }
 
@@ -23,25 +24,44 @@ class World {
         this.character.world = this;                // damit kann ich in Character auf die Variablen aus world zugreifen
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.character.isHurt();
-                    this.statusBarHealth.setPercentage(this.character.energy);
-                }
-            });
+            this.checkCollisions();
+            this.checkCoins();
+            this.checkThrowObjects();
         }, 200);
     }
 
+    checkThrowObjects() {
+        if(this.keyboard.D) {
+            let throwableObject = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(throwableObject);
+        }
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.character.isHurt();
+                this.statusBarHealth.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkCollisionsFromAbove() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isCollidingFromAbove(enemy)) {
+                enemy.hit();
+            }
+        });
+    }
+
     checkCoins() {
-        setInterval(() => {
-            this.level.coins.forEach((coin) => {
-                if (this.character.isColliding(coin)) {
-                 }
-            });
-        }, 200);
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                }
+        });
     }
 
     draw() {
@@ -56,7 +76,10 @@ class World {
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
         this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);

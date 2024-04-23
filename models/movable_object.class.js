@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    energy = 100;
+    energy = 1000;
     lastHit = 0;
     
     applyGravity() {
@@ -16,7 +16,11 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 150;
+        if (this instanceof ThrowableObject) {      // Throwable Object should always fall
+            return true;
+        } else {
+            return this.y < 150;
+        }
     }
 
     isColliding(mo) {
@@ -46,7 +50,7 @@ class MovableObject extends DrawableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage++ % images.length;
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
