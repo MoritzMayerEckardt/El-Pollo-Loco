@@ -1,13 +1,13 @@
 class World {
-    character = new Character();
-    level = level1;
     canvas;
     ctx;
     keyboard;
-    camera_x = 0;
+    character = new Character();
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new statusBarCoin();
     statusBarBottle = new StatusBarBottle();
+    level = level1;
+    camera_x = 0;
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -40,19 +40,30 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
+                enemy.hit();
+                setTimeout(() => {
+                    this.level.enemies.splice(index, 1);
+                }, 5000);
+                
             }
         });
-    }
-
-    checkCollisionsFromAbove() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingFromAbove(enemy)) {
-                enemy.hit();
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.statusBarCoin.collectCoins();
+                this.statusBarCoin.setPercentage(this.statusBarCoin.percentage);
+                this.level.coins.splice(index, 1);
+            }
+        });
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.statusBarBottle.collectBottles();
+                this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
+                this.level.bottles.splice(index, 1);
             }
         });
     }

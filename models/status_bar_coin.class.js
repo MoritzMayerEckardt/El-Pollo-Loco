@@ -26,8 +26,15 @@ class statusBarCoin extends DrawableObject {
     let path = this.IMAGES[this.resolveImageIndex()]
     this.img = this.imageCache[path];
     }
-
+    
+    collectCoins() {
+        this.percentage += 10;
+    }
+    
     resolveImageIndex() {
+        if (this.percentage > 100) {
+            this.percentage = 100;
+        }
         if(this.percentage == 100) {
             return 5; 
         } else if (this.percentage > 80) {

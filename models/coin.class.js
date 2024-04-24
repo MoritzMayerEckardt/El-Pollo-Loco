@@ -1,5 +1,5 @@
 class Coin extends MovableObject {
-    y = 320;
+    y = 250 - Math.random() * 250;
     x = 500 + Math.random() * 1500;
     width = 150;
     height = 150;
