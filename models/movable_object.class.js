@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 1000;
     lastHit = 0;
+    long_idle_sound = new Audio('audio/long_idle.mp3');
     
     applyGravity() {
         setInterval(() => {
@@ -66,5 +67,9 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 30;
+    }
+
+    wakeUp() {
+        this.long_idle_sound.pause();
     }
 }

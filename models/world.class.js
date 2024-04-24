@@ -9,6 +9,11 @@ class World {
     level = level1;
     camera_x = 0;
     throwableObjects = [];
+    coin_sound = new Audio('audio/coin.mp3');
+    chicken_sound = new Audio('audio/chicken.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+    random_sound = new Audio('audio/random.mp3');
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -16,7 +21,26 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();                       
+        this.run();    
+        this.playChickenSound(); 
+        this.playRandomSound();                
+    }
+
+    playRandomSound() {
+        setInterval(() => {
+            this.random_sound.play();
+        }, Math.random() * 100000);
+       
+    }
+
+    playChickenSound() {
+        setInterval(() => {
+            if (this.level.enemies.lenght == 0) {
+                this.chicken_sound.pause(); 
+            } else {
+                this.chicken_sound.play();
+            }    
+        }, 200);
     }
 
     setWorld() {
@@ -48,12 +72,13 @@ class World {
                 enemy.hit();
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1);
-                }, 1000);
+                }, 50);
                
             }
         });
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
+                this.coin_sound.play();
                 this.statusBarCoin.collectCoins();
                 this.statusBarCoin.setPercentage(this.statusBarCoin.percentage);
                 this.level.coins.splice(index, 1);
@@ -61,6 +86,7 @@ class World {
         });
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
+                this.bottle_sound.play();
                 this.statusBarBottle.collectBottles();
                 this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
                 this.level.bottles.splice(index, 1);
