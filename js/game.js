@@ -4,9 +4,13 @@ let keyboard = new Keyboard();
 
 async function init() {
     canvas = document.getElementById('canvas');
+    canvas.style.backgroundImage = 'url("img/9_intro_outro_screens/start/startscreen_1.png")';
+}
+
+function play() {
     world = new World(canvas, keyboard);
-    
-    console.log('My character is', world.character);
+    let playButton = document.getElementById('play');
+    playButton.classList.add('d-none');
 }
 
 window.addEventListener("keydown", (e) => {

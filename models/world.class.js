@@ -21,9 +21,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();    
-        this.playChickenSound(); 
-        this.playRandomSound();                
+        this.run();                  
     }
 
     playRandomSound() {
@@ -51,7 +49,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200);
+        }, 50);
     }
 
     checkThrowObjects() {
@@ -65,16 +63,27 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isCollidingFromSide(enemy)) {
                 this.character.hit();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
+            } else if (this.character.isCollidingFromTop(enemy)) {
                 enemy.hit();
+                this.character.jump();
                 setTimeout(() => {
-                    this.level.enemies.splice(index, 1);
-                }, 50);
-               
+                    this.level.enemies.splice(index, 1)
+                }, 500);
             }
+        });
+        this.level.enemies.forEach((enemy, index) => {
+            this.throwableObjects.forEach((bottle) => {
+                if (enemy.isColliding(bottle)) {
+                    enemy.hit();
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1)
+                    }, 500);
+                }
+            });
         });
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
