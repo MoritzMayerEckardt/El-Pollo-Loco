@@ -16,8 +16,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();  
-        this.checkCoins();                      
+        this.run();                       
     }
 
     setWorld() {
@@ -27,15 +26,16 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkCoins();
             this.checkThrowObjects();
         }, 200);
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D) {
+        if(this.keyboard.D && this.statusBarBottle.percentage > 0) {
             let throwableObject = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(throwableObject);
+            this.statusBarBottle.percentage -= 20;
+            this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
         }
     }
 
@@ -48,8 +48,8 @@ class World {
                 enemy.hit();
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1);
-                }, 5000);
-                
+                }, 1000);
+               
             }
         });
         this.level.coins.forEach((coin, index) => {
@@ -65,13 +65,6 @@ class World {
                 this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
                 this.level.bottles.splice(index, 1);
             }
-        });
-    }
-
-    checkCoins() {
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                }
         });
     }
 
