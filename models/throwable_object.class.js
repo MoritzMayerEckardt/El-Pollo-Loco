@@ -18,7 +18,9 @@ class ThrowableObject extends MovableObject {
     throw_sound = new Audio('audio/throw.mp3');
    
     constructor(x, y) {
-        super().loadImage(this.IMAGES_THROWING[3]);
+        super();
+        this.world = world; 
+        this.loadImage(this.IMAGES_THROWING[3]);
         this.loadImages(this.IMAGES_THROWING);
         this.x = x;
         this.y = y;
@@ -34,10 +36,15 @@ class ThrowableObject extends MovableObject {
         this.speedY = 20;
         this.applyGravity();
         setInterval(() => {
-            this.x += 20;
+            if (!this.world.character.otherDirection) {
+                this.x += 20;
+            } else {
+                this.x -= 20;
+            } 
         }, 1000 / 25);
     }
-
+    
+    
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWING);

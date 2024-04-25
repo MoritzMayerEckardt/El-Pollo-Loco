@@ -13,16 +13,16 @@ class World {
     bottle_sound = new Audio('audio/bottle.mp3');
     random_sound = new Audio('audio/random.mp3');
     hurt_sound = new Audio('audio/ouch.mp3');
-    chicken_dead_sound = new Audio('audio/chicken_dead.mp3')
+    chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.isThrowing = false;
         this.draw();
         this.setWorld();
-        this.run();   
-        this.playRandomSound();               
+        this.run();                 
     }
 
     playRandomSound() {
@@ -43,11 +43,15 @@ class World {
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D && this.statusBarBottle.percentage > 0) {
-            let throwableObject = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        if(this.keyboard.D && this.statusBarBottle.percentage > 0 && !this.isThrowing) {
+            let throwableObject = new ThrowableObject(this.character.x + 50, this.character.y + 50);
             this.throwableObjects.push(throwableObject);
             this.statusBarBottle.percentage -= 20;
             this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
+            this.isThrowing = true;
+            setTimeout(() => {
+                this.isThrowing = false;
+            }, 1000);
         }
     }
 

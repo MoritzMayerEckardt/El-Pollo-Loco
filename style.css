@@ -4,7 +4,7 @@
     font-family: 'Rye';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/rye-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('fonts/rye-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
 body {
@@ -21,7 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('/img/background5.png');
+    background-image: url('img/background5.png');
     background-size: cover;
     position: relative;
     min-height: 100vh;
