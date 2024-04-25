@@ -10,9 +10,10 @@ class World {
     camera_x = 0;
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
-    chicken_sound = new Audio('audio/chicken.mp3');
     bottle_sound = new Audio('audio/bottle.mp3');
     random_sound = new Audio('audio/random.mp3');
+    hurt_sound = new Audio('audio/ouch.mp3');
+    chicken_dead_sound = new Audio('audio/chicken_dead.mp3')
     
 
     constructor(canvas, keyboard) {
@@ -21,24 +22,14 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();                  
+        this.run();   
+        this.playRandomSound();               
     }
 
     playRandomSound() {
         setInterval(() => {
             this.random_sound.play();
-        }, Math.random() * 100000);
-       
-    }
-
-    playChickenSound() {
-        setInterval(() => {
-            if (this.level.enemies.lenght == 0) {
-                this.chicken_sound.pause(); 
-            } else {
-                this.chicken_sound.play();
-            }    
-        }, 200);
+        }, 10000);   
     }
 
     setWorld() {
@@ -65,10 +56,12 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isCollidingFromSide(enemy)) {
                 this.character.hit();
+                this.hurt_sound.play();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
             } else if (this.character.isCollidingFromTop(enemy)) {
                 enemy.hit();
+                this.chicken_dead_sound.play();
                 this.character.jump();
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1)
@@ -125,7 +118,7 @@ class World {
 
         // draw() wird immer wieder aufgerufen
         let self = this;                            
-        requestAnimationFrame(function() {
+        requestAnimationFrame(() => {
             self.draw();
         });
     }

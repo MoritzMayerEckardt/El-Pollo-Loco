@@ -20,6 +20,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
+    chicken_sound = new Audio('audio/chicken.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -32,6 +33,7 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.energy >= 5) {
             this.playAnimation(this.IMAGES_WALKING);
+            this.chicken_sound.play();
             } else {
                 this.playAnimation(this.IMAGES_DEAD);
             }
