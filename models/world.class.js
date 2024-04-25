@@ -20,6 +20,7 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.isThrowing = false;
+        this.throwableObject = null;
         this.draw();
         this.setWorld();
         this.run();                 
@@ -44,8 +45,12 @@ class World {
 
     checkThrowObjects() {
         if(this.keyboard.D && this.statusBarBottle.percentage > 0 && !this.isThrowing) {
-            let throwableObject = new ThrowableObject(this.character.x + 50, this.character.y + 50);
-            this.throwableObjects.push(throwableObject);
+            if(!this.character.otherDirection) {
+                this.throwableObject = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            } else {
+                this.throwableObject = new ThrowableObject(this.character.x, this.character.y + 100);
+            }
+            this.throwableObjects.push(this.throwableObject);
             this.statusBarBottle.percentage -= 20;
             this.statusBarBottle.setPercentage(this.statusBarBottle.percentage);
             this.isThrowing = true;
@@ -54,6 +59,7 @@ class World {
             }, 1000);
         }
     }
+    
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
