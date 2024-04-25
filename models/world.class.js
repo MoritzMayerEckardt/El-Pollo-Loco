@@ -14,7 +14,6 @@ class World {
     random_sound = new Audio('audio/random.mp3');
     hurt_sound = new Audio('audio/ouch.mp3');
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3')
-    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');

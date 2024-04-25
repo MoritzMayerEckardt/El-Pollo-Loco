@@ -29,10 +29,21 @@
 <body onload="init()">
     <div id="content">
         <h1>El Pollo Locco</h1>
-        <div id="play" class="play-button" onclick="play()">Play</div>
+        <div class="top-container" id="play">
+            <button class="play-button" onclick="startGame()">Play</button>
+            <div class="legal-notice-container">
+                <a>FAQ</a>
+                <a>Legal Notice</a>
+            </div>
+        </div>
         <canvas id="canvas" width="720" height="480">
-            
         </canvas>
+        <div class="explanation">
+            <span>Arrow Left/Right = Walk</span>
+            <span>Space = Jump</span>
+            <span>D = Throw Bottle</span>
+        </div>
+        <img onclick="playFullscreen()" id="fullscreen-icon" class="fullscreen-icon" src="img/fullscreen.png" alt="">
     </div>
 </body>
 </html>
