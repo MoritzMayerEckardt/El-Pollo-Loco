@@ -49,13 +49,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    hitWithBottle() {
-        this.energy -= 1;
-        if (this.energy < 0) {
-            this.energy = 0;
-        }
-    }
-
     isDead() {
         return this.energy == 0;
     }

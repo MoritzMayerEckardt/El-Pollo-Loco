@@ -1,7 +1,6 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let intervalIds = [];
 let fullScreenIsOpen = false;
 
 async function init() {
@@ -16,13 +15,37 @@ async function startGame() {
     playButton.classList.add('d-none');
 }
 
-function stopGame() {
-    intervalIds.forEach(clearInterval);
+function gameLost() {
+    stopGame();
+    canvas = document.getElementById('canvas');
+    canvas.classList.add('d-none');
+    let gameOverContainer = document.getElementById('game-over');
+    let gameOverImage = document.getElementById('img-game-over');
+    gameOverContainer.classList.remove('d-none');
+    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/game_over/you lost.png");
 }
 
-function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
+function gameWon() {
+    stopGame();
+    canvas = document.getElementById('canvas');
+    canvas.classList.add('d-none');
+    let gameOverContainer = document.getElementById('game-over');
+    let gameOverImage = document.getElementById('img-game-over');
+    gameOverContainer.classList.remove('d-none');
+    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/game_over/you lost.png");
+}
+
+function stopGame() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
+function playAgain() {
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove('d-none');
+    let gameOverContainer = document.getElementById('game-over');
+    gameOverContainer.classList.add('d-none');
+    init();
+    startGame();
 }
 
 function playFullscreen() {
@@ -95,3 +118,8 @@ function exitFullscreen() {
       document.webkitExitFullscreen();
     }
   }
+
+  function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+}

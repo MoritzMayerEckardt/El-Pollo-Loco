@@ -8,6 +8,8 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarEndboss = new StatusBarEndboss();
     level = level1;
+    gameOver = false;
+    gameWon = false;
     camera_x = 0;
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
@@ -24,7 +26,8 @@ class World {
         this.throwableObject = null;
         this.draw();
         this.setWorld();
-        this.run();                 
+        this.run();
+        this.checkGameOver();                 
     }
 
     playRandomSound() {
@@ -44,6 +47,17 @@ class World {
         }, 50);
     }
 
+    checkGameOver() {
+        setInterval(() => {
+            if(this.gameOver == true) {
+                gameLost();
+            } else if (this.gameWon == true) {
+                gameWon();
+            }
+        }, 3000); 
+    }
+
+
     checkThrowObjects() {
         if(this.keyboard.D && this.statusBarBottle.percentage > 0 && !this.isThrowing) {
             if(!this.character.otherDirection) {
@@ -60,7 +74,6 @@ class World {
             }, 1000);
         }
     }
-    
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -76,11 +89,13 @@ class World {
             }
         });
         this.throwableObjects.forEach((bottle) => {
-            this.level.enemies.forEach((enemy, index) => {
+            this.level.enemies.forEach((enemy) => {
                 if (bottle.isCollidingFromTop(enemy) && enemy instanceof Chicken || bottle.isCollidingFromTop(enemy) && enemy instanceof SmallChicken) {
-                    enemy.hitWithBottle(); 
+                    enemy.hit(); 
                 } else if (bottle.isCollidingFromSide(enemy) && enemy instanceof Endboss) {
-                    enemy.hitWithBottle();
+                    enemy.hit();
+                    this.statusBarEndboss.percentage = enemy.energy * 0.5;
+                    this.statusBarEndboss.setPercentage(this.statusBarEndboss.percentage);
                     console.log('energy of enemy is', enemy.energy)
                 }
             });

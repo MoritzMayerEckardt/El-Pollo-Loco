@@ -3,8 +3,8 @@ class Endboss extends MovableObject {
     width = 250;
     y = 60;
     x = 2000;
-    energy = 50;
-    speed = 3;
+    energy = 200;
+    speed = 15;
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -48,7 +48,9 @@ class Endboss extends MovableObject {
     chicken_sound = new Audio('audio/chicken.mp3');
 
     constructor() {
-        super().loadImage(this.IMAGES_ALERT[0]);
+        super();
+        this.world = world; 
+        this.loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALKING);
@@ -57,23 +59,22 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let endbossInterval = setInterval(() => {
             if (this.energy == 0) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.energy <= 20) {
+                setTimeout(() => {
+                    clearInterval(endbossInterval);
+                }, 1000);
+                world.gameWon = true;
+            } else if (this.energy <= 100) {
                 this.playAnimation(this.IMAGES_WALKING);
-                this.runLeft(); 
-            } else if(this.energy <= 30) {
+                this.moveLeft(); 
+            } else if(this.energy <= 150) {
                 this.playAnimation(this.IMAGES_ATTACK);
-                this.moveLeft();
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
                 this.chicken_sound.play();
             }
         }, 200); 
-    }
-
-    runLeft() {
-        this.x -= this.speed * 5;
     }
 }

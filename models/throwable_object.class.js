@@ -44,10 +44,10 @@ class ThrowableObject extends MovableObject {
                 } else if (this.y > 400) {
                     this.y = 400;
                 }});   
-            if (!this.world.character.otherDirection || this.world.keyboard.RIGHT) {
-                this.x += 20;
-            } else {
+            if (this.world.character.otherDirection) {
                 this.x -= 20;
+            } else {
+                this.x += 20;
             }
         }, 1000 / 25);
     }

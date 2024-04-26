@@ -37,8 +37,13 @@
                 <a>Legal Notice</a>
             </div>
         </div>
-        <canvas id="canvas" width="720" height="480">
-        </canvas>
+        <div class="inner-content">
+            <div id="game-over" class="d-none">
+                <img class="img-game-over" id="img-game-over" src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
+                <button class="play-again-button" onclick="playAgain()">Play again</button>
+            </div>
+            <canvas id="canvas" width="720" height="480"></canvas>
+        </div>
         <div class="explanation">
             <span>Arrow Left/Right = Walk</span>
             <span>Space = Jump</span>

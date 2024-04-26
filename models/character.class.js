@@ -1,8 +1,9 @@
 class Character extends MovableObject {
-    y = 80;
+    y = 150;
     height = 300;
     width = 150;
     speed = 10;
+    energy = 100;
     lastKeyPress = Date.now();
 
     IMAGES_WALKING = [
@@ -101,9 +102,13 @@ class Character extends MovableObject {
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
-        setInterval(() => {
+        let moveInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    clearInterval(moveInterval);
+                }, 2000);
+                world.gameOver = true;
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.world.keyboard.RIGHT && !this.isAboveGround() || this.world.keyboard.LEFT && !this.isAboveGround()) {
