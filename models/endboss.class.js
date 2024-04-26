@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     width = 250;
     y = 60;
     x = 2000;
-    energy = 20;
+    energy = 100;
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',

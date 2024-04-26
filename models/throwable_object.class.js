@@ -22,6 +22,7 @@ class ThrowableObject extends MovableObject {
         this.world = world; 
         this.loadImage(this.IMAGES_THROWING[3]);
         this.loadImages(this.IMAGES_THROWING);
+        this.loadImages(this.IMAGES_SPLASHING);
         this.x = x;
         this.y = y;
         this.height = 70;
@@ -35,20 +36,38 @@ class ThrowableObject extends MovableObject {
         this.wakeUp();
         this.speedY = 20;
         this.applyGravity();
-        setInterval(() => {
+        let throwInterval = setInterval(() => {
+            if (this.y > 400) {
+                clearInterval(throwInterval);
+                this.y = 400;
+            }
             if (!this.world.character.otherDirection) {
                 this.x += 20;
             } else {
                 this.x -= 20;
-            } 
+            }
         }, 1000 / 25);
     }
     
     
     animate() {
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_THROWING);
+        let splashInterval = setInterval(() => {
+            if(this.checkHeight() < 301) {
+                this.playAnimation(this.IMAGES_THROWING);
+            } else {
+                this.playAnimation(this.IMAGES_SPLASHING);
+                setTimeout(() => {
+                    clearInterval(splashInterval);
+                }, 240);
+                setTimeout(() => {
+                    this.world.throwableObjects.splice(0, 1);
+                }, 300);
+            }
         }, 60); 
+    }
+
+    checkHeight() {
+            return this.y;
     }
 
     playThrowSound() {

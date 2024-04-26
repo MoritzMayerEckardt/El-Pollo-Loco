@@ -6,6 +6,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new statusBarCoin();
     statusBarBottle = new StatusBarBottle();
+    statusBarEndboss = new StatusBarEndboss();
     level = level1;
     camera_x = 0;
     throwableObjects = [];
@@ -68,7 +69,7 @@ class World {
                 this.hurt_sound.play();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
-            } else if (this.character.isCollidingFromTop(enemy)) {
+            } else if (this.character.isCollidingFromTop(enemy) && enemy instanceof Chicken || this.character.isCollidingFromTop(enemy) && enemy instanceof SmallChicken) {
                 enemy.hit();
                 this.chicken_dead_sound.play();
                 this.character.jump();
@@ -76,16 +77,6 @@ class World {
                     this.level.enemies.splice(index, 1)
                 }, 500);
             }
-        });
-        this.level.enemies.forEach((enemy, index) => {
-            this.throwableObjects.forEach((bottle) => {
-                if (enemy.isColliding(bottle)) {
-                    enemy.hit();
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1)
-                    }, 500);
-                }
-            });
         });
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -116,6 +107,7 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.throwableObjects);
