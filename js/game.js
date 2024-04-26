@@ -39,6 +39,10 @@ function stopGame() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+function loadStartPage() {
+    location.reload();
+}
+
 function playAgain() {
     canvas = document.getElementById('canvas');
     canvas.classList.remove('d-none');

@@ -63,10 +63,17 @@ button {
     font-weight: 700;
 }
 
-.play-again-button {
+.play-again-container {
     position: absolute;
     bottom: 48px;
-    right: 250px;
+    right: 96px;
+    width: 540px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.play-again-button {
     color: #FFD800 !important;
 }
 

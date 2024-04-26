@@ -10,6 +10,7 @@ class World {
     level = level1;
     gameOver = false;
     gameWon = false;
+    isHit = false;
     camera_x = 0;
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
@@ -27,7 +28,9 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.checkGameOver();                 
+        this.checkGameOver();
+        this.checkDeadObjects();   
+        this.playRandomSound();         
     }
 
     playRandomSound() {
@@ -47,6 +50,16 @@ class World {
         }, 50);
     }
 
+    checkDeadObjects() {
+        setInterval(() => {
+            world.level.enemies.forEach((enemy, index) => {
+                if (enemy.isDead()) {
+                    world.level.enemies.splice(index, 1)
+                }
+            });
+        }, 7500);
+    }
+
     checkGameOver() {
         setInterval(() => {
             if(this.gameOver == true) {
@@ -56,7 +69,6 @@ class World {
             }
         }, 3000); 
     }
-
 
     checkThrowObjects() {
         if(this.keyboard.D && this.statusBarBottle.percentage > 0 && !this.isThrowing) {
@@ -71,17 +83,21 @@ class World {
             this.isThrowing = true;
             setTimeout(() => {
                 this.isThrowing = false;
-            }, 1000);
+            }, 500);
         }
     }
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingFromSide(enemy) && enemy.energy >= 5) {
+            if (this.character.isCollidingFromSide(enemy) && enemy.energy >= 5 && !this.isHit) {
                 this.character.hit();
                 this.hurt_sound.play();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
+                this.isHit = true;
+                setTimeout(() => {
+                    this.isHit = false;
+                }, 500);
             } else if (this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof Chicken || this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof SmallChicken) {
                 enemy.hit();
                 this.chicken_dead_sound.play();
@@ -156,7 +172,6 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-        mo.drawFrame(this.ctx);
         mo.draw(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
