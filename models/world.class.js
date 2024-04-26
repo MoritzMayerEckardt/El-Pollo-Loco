@@ -78,6 +78,17 @@ class World {
                 }, 500);
             }
         });
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach((enemy, index) => {
+                if (bottle.isCollidingFromTop(enemy) && enemy instanceof Chicken || bottle.isCollidingFromTop(enemy) && enemy instanceof SmallChicken || bottle.isCollidingFromSide(enemy) && enemy instanceof Endboss) {
+                    enemy.hit();
+                    console.log('energy of enemy is', enemy.energy)
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1)
+                    }, 500);  
+                }
+            });
+        });
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 this.coin_sound.play();
