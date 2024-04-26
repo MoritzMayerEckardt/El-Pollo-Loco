@@ -63,29 +63,25 @@ class World {
     
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isCollidingFromSide(enemy)) {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isCollidingFromSide(enemy) && enemy.energy >= 5) {
                 this.character.hit();
                 this.hurt_sound.play();
                 this.character.isHurt();
                 this.statusBarHealth.setPercentage(this.character.energy);
-            } else if (this.character.isCollidingFromTop(enemy) && enemy instanceof Chicken || this.character.isCollidingFromTop(enemy) && enemy instanceof SmallChicken) {
+            } else if (this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof Chicken || this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof SmallChicken) {
                 enemy.hit();
                 this.chicken_dead_sound.play();
                 this.character.jump();
-                setTimeout(() => {
-                    this.level.enemies.splice(index, 1)
-                }, 500);
             }
         });
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy, index) => {
-                if (bottle.isCollidingFromTop(enemy) && enemy instanceof Chicken || bottle.isCollidingFromTop(enemy) && enemy instanceof SmallChicken || bottle.isCollidingFromSide(enemy) && enemy instanceof Endboss) {
-                    enemy.hit();
+                if (bottle.isCollidingFromTop(enemy) && enemy instanceof Chicken || bottle.isCollidingFromTop(enemy) && enemy instanceof SmallChicken) {
+                    enemy.hitWithBottle(); 
+                } else if (bottle.isCollidingFromSide(enemy) && enemy instanceof Endboss) {
+                    enemy.hitWithBottle();
                     console.log('energy of enemy is', enemy.energy)
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1)
-                    }, 500);  
                 }
             });
         });
@@ -124,8 +120,8 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 
         // draw() wird immer wieder aufgerufen

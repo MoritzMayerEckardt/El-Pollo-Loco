@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    energy = 1000;
+    energy;
     lastHit = 0;
     long_idle_sound = new Audio('audio/long_idle.mp3');
 
@@ -46,6 +46,13 @@ class MovableObject extends DrawableObject {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+        }
+    }
+
+    hitWithBottle() {
+        this.energy -= 1;
+        if (this.energy < 0) {
+            this.energy = 0;
         }
     }
 
