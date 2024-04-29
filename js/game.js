@@ -3,7 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let fullScreenIsOpen = false;
 
-async function init() {
+function init() {
     canvas = document.getElementById('canvas');
     canvas.style.backgroundImage = 'url("img/9_intro_outro_screens/start/startscreen_1.png")';
 }
