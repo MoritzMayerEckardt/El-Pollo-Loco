@@ -36,21 +36,20 @@ class ThrowableObject extends MovableObject {
         this.wakeUp();
         this.speedY = 20;
         this.applyGravity();
+        let throwDirection = this.world.character.otherDirection ? -1 : 1;
         let throwInterval = setInterval(() => {
             this.world.level.enemies.forEach(enemy => {
-                if (this.isColliding(enemy) && (!enemy instanceof Endboss)) {
+                if (this.isColliding(enemy) && !(enemy instanceof Endboss)) {
                     clearInterval(throwInterval);
                     this.y = enemy.y;
                 } else if (this.y > 400) {
                     this.y = 400;
-                }});   
-            if (this.world.character.otherDirection) {
-                this.x -= 20;
-            } else {
-                this.x += 20;
-            }
+                }
+            });
+            this.x += 20 * throwDirection;
         }, 1000 / 25);
     }
+    
     
     animate() {
         let splashInterval = setInterval(() => {
@@ -69,7 +68,7 @@ class ThrowableObject extends MovableObject {
     }
 
     checkHeight() {
-            return this.y;
+        return this.y;
     }
 
     playThrowSound() {

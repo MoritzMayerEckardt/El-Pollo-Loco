@@ -90,15 +90,19 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isCollidingFromSide(enemy) && enemy.energy >= 5 && !this.isHit) {
-                this.character.hit();
                 this.hurt_sound.play();
                 this.character.isHurt();
+                if (enemy instanceof Endboss) {
+                    this.character.bigHit();
+                } else {
+                    this.character.hit();
+                }
                 this.statusBarHealth.setPercentage(this.character.energy);
                 this.isHit = true;
                 setTimeout(() => {
                     this.isHit = false;
                 }, 500);
-            } else if (this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof Chicken || this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && enemy instanceof SmallChicken) {
+            } else if (this.character.isCollidingFromTop(enemy) && enemy.energy >= 5 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
                 enemy.hit();
                 this.chicken_dead_sound.play();
                 this.character.jump();
@@ -172,6 +176,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

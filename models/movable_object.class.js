@@ -32,12 +32,25 @@ class MovableObject extends DrawableObject {
     }
 
     isCollidingFromSide(mo) {
-        return (this.x + this.width >= mo.x && this.x + this.width <= mo.x + mo.width && this.y < mo.y + mo.height && this.y + this.height > mo.y) ||
-        (this.x <= mo.x + mo.width && this.x >= mo.x && this.y < mo.y + mo.height && this.y + this.height > mo.y);
+        let isCollidingFromLeft = this.x + this.width - 10 >= mo.x && 
+            this.x + this.width - 10 <= mo.x + mo.width &&
+            this.y < mo.y + mo.height && 
+            this.y + this.height > mo.y;
+        let isCollidingFromRight = this.x + 10 <= mo.x + mo.width && 
+        this.x + 10 >= mo.x &&        
+            this.y < mo.y + mo.height && 
+            this.y + this.height > mo.y;
+        return isCollidingFromLeft || isCollidingFromRight;
     }
-
+    
+    
     isCollidingFromTop(mo) {
-        return this.y + this.height >= mo.y && this.y + this.height <= mo.y + mo.height && this.x < mo.x + mo.width && this.x + this.width > mo.x;
+        let isCollidingFromTop = this.y + this.height >= mo.y && 
+            this.y + this.height <= mo.y + mo.height && 
+            this.x + 50 < mo.x + mo.width && 
+            this.x + this.width - 50 > mo.x;
+
+        return isCollidingFromTop;
     }
 
     hit() {
@@ -50,7 +63,7 @@ class MovableObject extends DrawableObject {
     }
 
     bigHit() {
-        this.energy -= 50;
+        this.energy -= 25;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -59,7 +72,7 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.energy <= 0;
     }
 
     isHurt() {
