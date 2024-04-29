@@ -52,6 +52,7 @@ h1 {
 }
 canvas {
     background-size: 720px 480px;
+    position: relative;
 }
 
 button {
@@ -136,4 +137,17 @@ a:hover {
 .fullscreen-icon:hover {
     transform: scale(1.1);
     cursor: pointer;
+}
+
+.play-button {
+    animation: scaleAnimation 0.5s infinite alternate;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(1.0);
+    }
+    100% {
+        transform: scale(1.2);
+    }
 }

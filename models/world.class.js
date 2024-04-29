@@ -112,7 +112,6 @@ class World {
                     enemy.hit();
                     this.statusBarEndboss.percentage = enemy.energy * 0.5;
                     this.statusBarEndboss.setPercentage(this.statusBarEndboss.percentage);
-                    console.log('energy of enemy is', enemy.energy)
                 }
             });
         });

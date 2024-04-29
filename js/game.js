@@ -32,7 +32,8 @@ function gameWon() {
     let gameOverContainer = document.getElementById('game-over');
     let gameOverImage = document.getElementById('img-game-over');
     gameOverContainer.classList.remove('d-none');
-    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/game_over/you lost.png");
+    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/you-won.png");
+    gameOverContainer.style.filter = 'brightness(80%)';
 }
 
 function stopGame() {
@@ -54,7 +55,7 @@ function playAgain() {
 
 function playFullscreen() {
     if(!fullScreenIsOpen) {
-        let content = document.getElementById('content');
+        let content = document.getElementById('canvas');
         enterFullscreen(content);
         fullScreenIsOpen = true;
     } else {
