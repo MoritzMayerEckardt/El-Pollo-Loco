@@ -17,6 +17,7 @@ class World {
     fullScreen;
     audioHandler;
     audioOn = true; 
+    fullscreenOn = false;
     coin_sound = new Audio('audio/coin.mp3');
     bottle_sound = new Audio('audio/bottle.mp3');
     random_sound = new Audio('audio/random.mp3');
@@ -71,7 +72,14 @@ class World {
             this.checkThrowObjects();
             this.checkBuyBottles();
             this.checkCheats();
+            this.checkLeavingFullScreen();
         }, 50);
+    }
+
+    checkLeavingFullScreen() {
+        if(this.keyboard.ESC) {
+            this.fullscreenOn = true;
+        } 
     }
 
     checkDeadObjects() {
@@ -201,8 +209,10 @@ class World {
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarEndboss);
-        this.addToMap(this.fullScreen);
-        this.addToMap(this.audioHandler);
+        if(!this.fullscreenOn) {
+            this.addToMap(this.fullScreen);
+            this.addToMap(this.audioHandler);
+        }
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.throwableObjects);

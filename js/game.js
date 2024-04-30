@@ -80,6 +80,9 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode == 89) {
         keyboard.Y = true;
     }
+    if (e.keyCode == 27) {
+        keyboard.ESC = true;
+    }
 });
 
 window.addEventListener("keyup", (e) => {
@@ -109,6 +112,9 @@ window.addEventListener("keyup", (e) => {
     }
     if (e.keyCode == 89) {
         keyboard.Y = false;
+    }
+    if (e.keyCode == 27) {
+        keyboard.ESC = false;
     }
 });
 
