@@ -32,7 +32,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.playThrowSound();
+        this.world.playAudio(this.throw_sound);
         this.wakeUp();
         this.speedY = 20;
         this.applyGravity();
@@ -69,9 +69,5 @@ class ThrowableObject extends MovableObject {
 
     checkHeight() {
         return this.y;
-    }
-
-    playThrowSound() {
-        this.throw_sound.play();
     }
 }

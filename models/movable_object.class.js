@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     energy;
     lastHit = 0;
     long_idle_sound = new Audio('audio/long_idle.mp3');
+    fullscreenOn = false;
 
     applyGravity() {
         setInterval(() => {

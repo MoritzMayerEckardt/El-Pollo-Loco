@@ -9,7 +9,7 @@
 
 body {
     margin: 0;
-    font-family: 'Rye';
+    font-family: 'Rye', Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -25,6 +25,7 @@ body {
     background-size: cover;
     position: relative;
     min-height: 100vh;
+    padding: 80px;
 }
 
 .inner-content {
@@ -49,13 +50,34 @@ h1 {
     font-size: 80px;
     color: #CE6524;
     margin-block-start: 0;
+    text-shadow: 2px 2px 2px #A02204;
 }
+
+h2 {
+    font-size: 32px;
+    color: #CE6524;
+    font-weight: 700;
+}
+
 canvas {
     background-size: 720px 480px;
     position: relative;
+    display: block;
 }
 
-button {
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+}
+
+.play-button {
     background: none;
     border: none;
     font-family: 'Rye';
@@ -75,11 +97,35 @@ button {
 }
 
 .play-again-button {
-    color: #FFD800 !important;
+    color: #FFD800;
+    font-size: 40px;
+    font-weight: 700;
+    background: none;
+    border: none;
+    font-family: 'Rye';
 }
 
 .play-again-button:hover {
-    color: #A02204 !important;
+    color: #A02204;
+    cursor: pointer;
+    transform: scale(1.2);
+    text-shadow: 1px 1px 1px #CE6524;
+}
+
+.play-again-button-faq {
+    color: #FFD800;
+    font-size: 40px;
+    font-weight: 700;
+    background: none;
+    border: none;
+    font-family: 'Rye';
+}
+
+.play-again-button-faq:hover {
+    color: #A02204;
+    cursor: pointer;
+    transform: scale(1.2);
+    text-shadow: 1px 1px 1px #CE6524;
 }
 
 .top-container {
@@ -101,14 +147,17 @@ button:hover {
     cursor: pointer;
     transform: scale(1.2);
     color: #A02204;
+    text-shadow: 1px 1px 1px #CE6524;
 }
 
-a {
+.link-index {
     font-size: 20px;
     color: #CE6524;
+    font-weight: 700;
+    text-decoration: none;
 }
 
-a:hover {
+.link-index:hover {
     cursor: pointer;
     color: #A02204;
     transform: scale(1.05);
@@ -127,20 +176,16 @@ a:hover {
     font-weight: 700;
 }
 
-.fullscreen-icon {
-    height: 40px;
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
-}
-
-.fullscreen-icon:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
 .play-button {
     animation: scaleAnimation 0.5s infinite alternate;
+    text-shadow: 1px 1px 1px #A02204;
+}
+
+dl {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
 @keyframes scaleAnimation {

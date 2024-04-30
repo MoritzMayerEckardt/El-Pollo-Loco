@@ -1,7 +1,6 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let fullScreenIsOpen = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -53,17 +52,6 @@ function playAgain() {
     startGame();
 }
 
-function playFullscreen() {
-    if(!fullScreenIsOpen) {
-        let content = document.getElementById('canvas');
-        enterFullscreen(content);
-        fullScreenIsOpen = true;
-    } else {
-        exitFullscreen()
-        fullScreenIsOpen = false;
-    }
-}
-
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -82,6 +70,15 @@ window.addEventListener("keydown", (e) => {
     }
     if (e.keyCode == 68) {
         keyboard.D = true;
+    }
+    if (e.keyCode == 87) {
+        keyboard.W = true;
+    } 
+    if (e.keyCode == 88) {
+        keyboard.X = true;
+    }
+    if (e.keyCode == 89) {
+        keyboard.Y = true;
     }
 });
 
@@ -104,27 +101,17 @@ window.addEventListener("keyup", (e) => {
     if (e.keyCode == 68) {
         keyboard.D = false;
     }
+    if (e.keyCode == 87) {
+        keyboard.W = false;
+    }
+    if (e.keyCode == 88) {
+        keyboard.X = false;
+    }
+    if (e.keyCode == 89) {
+        keyboard.Y = false;
+    }
 });
 
-function enterFullscreen(element) {
-  if(element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
-    element.msRequestFullscreen();
-  } else if(element.webkitRequestFullscreen) {  // iOS Safari
-    element.webkitRequestFullscreen();
-  }
-}
-
-function exitFullscreen() {
-    if(document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if(document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-  }
-
-  function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
+function redirectToIndex() {
+    window.location.href = "./index.html";
 }

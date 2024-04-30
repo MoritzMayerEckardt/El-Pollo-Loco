@@ -55,6 +55,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
         this.animate();
     }
 
@@ -66,6 +67,8 @@ class Endboss extends MovableObject {
                     clearInterval(endbossInterval);
                 }, 1000);
                 world.gameWon = true;
+            } else if(this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
             } else if (this.energy <= 100) {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft(); 
@@ -73,7 +76,7 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
-                this.chicken_sound.play();
+                world.playAudio(this.chicken_sound);
             }
         }, 200); 
     }
