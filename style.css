@@ -60,6 +60,7 @@ h2 {
 }
 
 canvas {
+    background-size: 720px 480px;
     position: relative;
     display: block;
 }
@@ -67,9 +68,6 @@ canvas {
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
-    }
-    h1 {
-        display: none;
     }
 }
 
