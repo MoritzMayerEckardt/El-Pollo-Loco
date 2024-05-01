@@ -20,7 +20,7 @@ class FullScreen extends MovableObject {
     handleClick() {
         if (this.isMouseOverButton(event.offsetX, event.offsetY)) {
             this.canvas.requestFullscreen();
-            world.fullscreenOn = false;
+            world.fullscreenOn = true;
         }
     }
 }

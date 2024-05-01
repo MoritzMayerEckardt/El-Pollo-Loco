@@ -78,7 +78,7 @@ class World {
 
     checkLeavingFullScreen() {
         if(this.keyboard.ESC) {
-            this.fullscreenOn = true;
+            this.fullscreenOn = false;
         } 
     }
 
