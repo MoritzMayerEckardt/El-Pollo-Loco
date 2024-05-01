@@ -16,6 +16,7 @@ async function startGame() {
 
 function gameLost() {
     stopGame();
+    closeFullscreen();
     canvas = document.getElementById('canvas');
     canvas.classList.add('d-none');
     let gameOverContainer = document.getElementById('game-over');
@@ -26,6 +27,7 @@ function gameLost() {
 
 function gameWon() {
     stopGame();
+    closeFullscreen();
     canvas = document.getElementById('canvas');
     canvas.classList.add('d-none');
     let gameOverContainer = document.getElementById('game-over');
@@ -41,6 +43,12 @@ function stopGame() {
 
 function loadStartPage() {
     location.reload();
+}
+
+function closeFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    }
 }
 
 function playAgain() {

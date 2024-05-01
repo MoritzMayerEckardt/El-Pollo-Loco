@@ -11,6 +11,7 @@ class World {
     gameOver = false;
     gameWon = false;
     isHit = false;
+    showIcons = true;
     camera_x = 0;
     throwableObjects = [];
     audioObjects = [];
@@ -72,14 +73,16 @@ class World {
             this.checkThrowObjects();
             this.checkBuyBottles();
             this.checkCheats();
-            this.checkLeavingFullScreen();
+            this.checkLeavingFullscreen();
         }, 50);
     }
 
-    checkLeavingFullScreen() {
-        if(this.keyboard.ESC) {
+    checkLeavingFullscreen() {
+        if(!document.fullscreenElement) {
             this.fullscreenOn = false;
-        } 
+        } else if (document.fullscreenElement) {
+            this.fullscreenOn = true;
+        }
     }
 
     checkDeadObjects() {
@@ -242,7 +245,6 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

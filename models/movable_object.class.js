@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
     }
 
     bigHit() {
-        this.energy -= 25;
+        this.energy -= 50;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
