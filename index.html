@@ -28,11 +28,10 @@
     <script src="models/level.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
-    <script src="js/game.js"></script>
 </head>
 <body onload="init()">
     <div id="content">
-        <h1>El Pollo Locco</h1>
+        <h1>El Pollo Loco</h1>
         <div class="top-container" id="play">
             <button class="play-button" onclick="startGame()">Play</button>
             <div class="legal-notice-container">
@@ -50,6 +49,18 @@
             </div>
             <canvas id="canvas" width="720" height="480">
             </canvas>
+            <div class="responsive-buttons-position-helper">
+                <div class="responsive-buttons-container">
+                    <div class="buttons-right-left">
+                        <button class="button-responsive" id="button-left"><img class="img-responsive-button" src="img/left.png" alt=""></button>
+                        <button class="button-responsive" id="button-right"><img class="img-responsive-button" src="img/right.png" alt=""></button>
+                    </div>
+                    <div  class="buttons-right-left">
+                        <button class="button-responsive" id="button-jump"><img class="img-responsive-button" src="img/up.png" alt=""></button>
+                        <button class="button-responsive" id="button-throw"><img class="img-responsive-button" src="img/throw.png" alt=""></button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="explanation" class="explanation">
             <span>Arrow Left/Right = Walk</span>
@@ -59,4 +70,5 @@
         </div>
     </div>
 </body>
+<script src="js/game.js"></script>
 </html>

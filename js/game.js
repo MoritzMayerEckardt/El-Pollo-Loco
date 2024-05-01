@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+
 function init() {
     canvas = document.getElementById('canvas');
     canvas.style.backgroundImage = 'url("img/9_intro_outro_screens/start/startscreen_1.png")';
@@ -91,7 +92,7 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode == 27) {
         keyboard.ESC = true;
     }
-});
+}); 
 
 window.addEventListener("keyup", (e) => {
     if (e.keyCode == 39) {
@@ -126,6 +127,58 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-function redirectToIndex() {
-    window.location.href = "./index.html";
+
+function updateKeyState(key, state) {
+    switch (key) {
+        case 'left':
+            keyboard.LEFT = state;
+            break;
+        case 'right':
+            keyboard.RIGHT = state;
+            break;
+        case 'jump':
+            keyboard.SPACE = state;
+            break;
+        case 'throw':
+            keyboard.D = state;
+            break;
+        default:
+            break;
+    }
 }
+
+document.getElementById('button-left').addEventListener('touchstart', function() {
+    updateKeyState('left', true);
+});
+
+document.getElementById('button-left').addEventListener('touchend', function() {
+    updateKeyState('left', false);
+});
+
+document.getElementById('button-right').addEventListener('touchstart', function() {
+    updateKeyState('right', true);
+});
+
+document.getElementById('button-right').addEventListener('touchend', function() {
+    updateKeyState('right', false);
+});
+
+document.getElementById('button-jump').addEventListener('touchstart', function() {
+    updateKeyState('jump', true);
+});
+
+document.getElementById('button-jump').addEventListener('touchend', function() {
+    updateKeyState('jump', false);
+});
+
+document.getElementById('button-throw').addEventListener('touchstart', function() {
+    updateKeyState('throw', true);
+});
+
+document.getElementById('button-throw').addEventListener('touchend', function() {
+    updateKeyState('throw', false);
+});
+
+
+
+

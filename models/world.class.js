@@ -8,13 +8,15 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarEndboss = new StatusBarEndboss();
     level = level1;
+    camera_x = 0;
+    throwableObjects = [];
+    throwableObject;
     gameOver = false;
     gameWon = false;
     isHit = false;
+    isThrowing = false;
+    isBought = false;
     showIcons = true;
-    camera_x = 0;
-    throwableObjects = [];
-    audioObjects = [];
     fullScreen;
     audioHandler;
     audioOn = true; 
@@ -31,9 +33,6 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.isThrowing = false;
-        this.isBought = false;
-        this.throwableObject = null;
         this.setIcons();
         this.draw();
         this.setWorld();

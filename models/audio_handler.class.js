@@ -10,8 +10,8 @@ class AudioHandler extends MovableObject {
     constructor() {
         super();
         this.canvas = canvas;
-        this.loadImage('img/audio_on.svg');
         this.world = world;
+        this.loadImage('img/audio_on.svg');
         this.canvas.addEventListener('click', () => this.handleClick());
     }
 
