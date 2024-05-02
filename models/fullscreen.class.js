@@ -1,4 +1,5 @@
 class FullScreen extends MovableObject {
+    
     width = 20;
     height = 20;
     y = 30;

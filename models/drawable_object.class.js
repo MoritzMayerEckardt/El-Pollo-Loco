@@ -1,4 +1,5 @@
 class DrawableObject {
+    
     x = 120;
     y = 200;
     height = 150;
@@ -8,7 +9,7 @@ class DrawableObject {
     currentImage = 0;
 
     loadImage(path) {
-        this.img = new Image();                 // this.img = document.getElementById('image')  <img id="image">
+        this.img = new Image();                
         this.img.src = path;
     }
 
@@ -32,7 +33,5 @@ class DrawableObject {
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         }
-    }
-
-    
+    } 
 }

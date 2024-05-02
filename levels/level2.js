@@ -1,23 +1,26 @@
-function initLevel1() {
-    level1  = new Level(
+function initLevel2() {
+    level2  = new Level(
           [
             new Chicken(),
             new Chicken(),
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new Chicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
             new SmallChicken(),
             new SmallChicken(),
             new SmallChicken(),
             new SmallChicken(),
             new SmallChicken(),
             new Endboss(),
+           
         ],
         [
-            new Cloud(),
-            new Cloud(),
-            new Cloud(),
-            new Cloud(),
             new Cloud(),
             new Cloud(),
             new Cloud(),
@@ -72,6 +75,13 @@ function initLevel1() {
             new Coin(),
             new Coin(),
             new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
         ],
         [
             new Bottle(),
@@ -79,7 +89,11 @@ function initLevel1() {
             new Bottle(),
             new Bottle(),
             new Bottle(),
-            new Bottle()
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
         ]
     );
 }

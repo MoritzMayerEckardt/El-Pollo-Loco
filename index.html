@@ -28,6 +28,9 @@
     <script src="models/level.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="levels/level2.js"></script>
+    <script src="levels/level3.js"></script>
+    <script src="levels/level4.js"></script>
 </head>
 <body onload="init()">
     <div id="content">
@@ -47,15 +50,24 @@
                     <button class="play-again-button" onclick="loadStartPage()">Go back</button>
                 </div>
             </div>
+            <div id="you-won" class="d-none">
+                <img class="img-game-over" id="img-you-won" src="img/9_intro_outro_screens/you-won.png" alt="">
+                <div class="play-again-container">
+                    <button class="play-again-button" onclick="playAgain()">Play again</button>
+                    <button class="play-again-button" onclick="loadStartPage()">Go back</button>
+                    <button class="play-again-button" onclick="nextLevel()">Next Level</button>
+                </div>
+            </div>
             <canvas id="canvas" width="720" height="480">
             </canvas>
             <div class="responsive-buttons-position-helper">
-                <div class="responsive-buttons-container">
+                <div id="responsive-buttons-container" class="responsive-buttons-container d-none">
                     <div class="buttons-right-left">
                         <button class="button-responsive" id="button-left"><img class="img-responsive-button" src="img/left.png" alt=""></button>
                         <button class="button-responsive" id="button-right"><img class="img-responsive-button" src="img/right.png" alt=""></button>
                     </div>
                     <div  class="buttons-right-left">
+                        <button class="button-responsive" id="button-buy-bottle"> <img class="img-responsive-button" src="img/bottle.png" alt=""></button>
                         <button class="button-responsive" id="button-jump"><img class="img-responsive-button" src="img/up.png" alt=""></button>
                         <button class="button-responsive" id="button-throw"><img class="img-responsive-button" src="img/throw.png" alt=""></button>
                     </div>
@@ -68,6 +80,14 @@
             <span>D = Throw Bottle</span>
             <span>W = Buy Bottle<br>(5 coins/unit)</span>
         </div>
+        <div id="explanation-responsive" class="explanation-responsive">
+            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/left.png" alt=""></div><span>Walk Left</span></div>
+            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/right.png" alt=""></div><span>Walk Right</span></div>    
+            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"> <img class="img-responsive-button-explanation" src="img/bottle.png" alt=""></div><span>Buy Bottle (5 coins / unit)</span></div>    
+            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/up.png" alt=""></div><span>Jump</span></div> 
+            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/throw.png" alt=""></div><span>Throw Bottle</span></div> 
+        </div>
+        <div class="turn-device">Turn your devide to play</div>
     </div>
 </body>
 <script src="js/game.js"></script>

@@ -41,6 +41,14 @@ body {
     position: relative;
 }
 
+#you-won {
+    width: 100%;
+    height: 100%;
+    background: url('img/5_background/first_half_background.png');
+    background-size: cover;
+    position: relative;
+}
+
 .img-game-over {
     width: 100%;
     height: 100%;
@@ -89,7 +97,7 @@ canvas:hover {
 
 .play-again-button {
     color: #FFD800;
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 700;
     background: none;
     border: none;
@@ -163,10 +171,15 @@ button:hover {
     display: none;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+}
+
 .explanation {
     display: flex;
     justify-content: space-between;
-    width: 720px;
+    gap: 24px;
     padding: 16px;
     color: #A0220A;
     font-weight: 700;
@@ -213,7 +226,6 @@ dl {
 }
 
 .responsive-buttons-container {
-    display: flex;
     justify-content: space-between;
     position: absolute;
     bottom: 16px;
@@ -227,7 +239,7 @@ dl {
 }
 
 .img-responsive-button {
-    height: 32px;
+    height: 48px;
 }
 
 .buttons-right-left {
@@ -239,11 +251,59 @@ dl {
     background-color: #A02204;
     border: none;
     border-radius: 100%;
-    height: 48px;
-    width: 48px;
+    height: 64px;
+    width: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.explanation-responsive {
+    display: none;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
+
+.button-responsive-explanation {
+    background-color: #A02204;
+    border: none;
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-responsive-button-explanation {
+    height: 32px;
+}
+
+.turn-device {
+    display: none;
+    position: absolute;
+    top: 18%;
+    font-size: 40px;
+    text-align: center;
+    animation: rotateAnimation 3.5s linear infinite;
+    color: #A02204;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px #CE6524;
+    width: 240px;
+    }
+    
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-90deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 @keyframes scaleAnimation {
@@ -255,7 +315,7 @@ dl {
     }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1000px) {
     .top-container {
         width: 100%;
         position: absolute;
@@ -264,6 +324,9 @@ dl {
         padding: 8px 32px 8px 32px;
     }
     h1 {
+        display: none;
+    }
+    .explanation {
         display: none;
     }
     canvas {
@@ -285,9 +348,6 @@ dl {
         width: 100%;
         height: 100%;
     }
-    .explanation {
-        display: none;
-    }
     .link-index {
         font-size: 16px;
     }
@@ -295,13 +355,22 @@ dl {
         display: block;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
         .responsive-buttons-container {
-            justify-content: center;
-            padding: 0px 40px 0px 40px;
-            gap: 40px;
+            display: none;
+        }
+        .explanation {
+            display: none;
+        }
+        .explanation-responsive {
+            display: block;
+        }
+        .turn-device {
+            display: block;
         }
     }
+
+
 }
 
 

@@ -1,10 +1,12 @@
 class Endboss extends MovableObject {
+
     height = 400;
     width = 250;
     y = 60;
-    x = 2000;
+    x = 3500;
     energy = 200;
     speed = 15;
+
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -45,6 +47,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
+
     chicken_sound = new Audio('audio/chicken.mp3');
 
     constructor() {
@@ -62,22 +65,38 @@ class Endboss extends MovableObject {
     animate() {
         let endbossInterval = setInterval(() => {
             if (this.energy == 0) {
-                this.playAnimation(this.IMAGES_DEAD);
-                setTimeout(() => {
-                    clearInterval(endbossInterval);
-                }, 1000);
-                world.gameWon = true;
+                this.achieveVictory(endbossInterval);
             } else if(this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.energy <= 100) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft(); 
-            } else if(this.energy <= 150) {
+            } else if (this.energy <= 120) {
+                this.walkLeft();
+            } else if(this.energy <= 160) {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else {
-                this.playAnimation(this.IMAGES_ALERT);
-                world.playAudio(this.chicken_sound);
+                this.inAlert();
             }
         }, 200); 
+    }
+
+    stopGameAfterVictory(endbossInterval) {
+        setTimeout(() => {
+            clearInterval(endbossInterval);
+        }, 1000);
+        world.gameWon = true;
+    }
+
+    walkLeft() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.moveLeft(); 
+    }
+
+    inAlert() {
+        this.playAnimation(this.IMAGES_ALERT);
+        world.playAudio(this.chicken_sound);
+    }
+
+    achieveVictory(endbossInterval) {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.stopGameAfterVictory(endbossInterval);
     }
 }

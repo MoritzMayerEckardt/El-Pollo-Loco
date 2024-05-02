@@ -1,18 +1,49 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
+let i = 1;
 
 function init() {
     canvas = document.getElementById('canvas');
     canvas.style.backgroundImage = 'url("img/9_intro_outro_screens/start/startscreen_1.png")';
 }
 
-async function startGame() {
-    await initLevel1();
-    world = new World(canvas, keyboard);
+function startGame() {
+    window[`initLevel${i}`]();
+    setWorld();
+    world.level = window[`level${i}`];
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    responsiveButtonsContainer.classList.remove('d-none');
+    responsiveButtonsContainer.style.display = 'flex';
     let playButton = document.getElementById('play');
     playButton.classList.add('d-none');
+}
+
+function setWorld() {
+    world = new World(canvas, keyboard);
+}
+
+function nextLevel() {
+    setNextLevel();
+    window[`initLevel${i}`]();
+    setWorld();
+    world.level = window[`level${i}`];
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove('d-none');
+    let gameOverContainer = document.getElementById('game-over');
+    let youWonContainer = document.getElementById('you-won');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    responsiveButtonsContainer.style.display = 'flex';
+    gameOverContainer.classList.add('d-none');
+    youWonContainer.classList.add('d-none');
+}
+
+function setNextLevel() {
+    if (i <= 3) {
+        i++
+    } else {
+        i = 1;
+    }
 }
 
 function gameLost() {
@@ -21,9 +52,9 @@ function gameLost() {
     canvas = document.getElementById('canvas');
     canvas.classList.add('d-none');
     let gameOverContainer = document.getElementById('game-over');
-    let gameOverImage = document.getElementById('img-game-over');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
     gameOverContainer.classList.remove('d-none');
-    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/game_over/you lost.png");
+    responsiveButtonsContainer.style.display = 'none';
 }
 
 function gameWon() {
@@ -31,10 +62,10 @@ function gameWon() {
     closeFullscreen();
     canvas = document.getElementById('canvas');
     canvas.classList.add('d-none');
-    let gameOverContainer = document.getElementById('game-over');
-    let gameOverImage = document.getElementById('img-game-over');
+    let gameOverContainer = document.getElementById('you-won');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
     gameOverContainer.classList.remove('d-none');
-    gameOverImage.setAttribute("src", "img/9_intro_outro_screens/you-won.png");
+    responsiveButtonsContainer.style.display = 'none';
     gameOverContainer.style.filter = 'brightness(80%)';
 }
 
@@ -56,7 +87,11 @@ function playAgain() {
     canvas = document.getElementById('canvas');
     canvas.classList.remove('d-none');
     let gameOverContainer = document.getElementById('game-over');
+    let youWonContainer = document.getElementById('you-won');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    responsiveButtonsContainer.style.display = 'flex';
     gameOverContainer.classList.add('d-none');
+    youWonContainer.classList.add('d-none');
     init();
     startGame();
 }
@@ -142,6 +177,10 @@ function updateKeyState(key, state) {
         case 'throw':
             keyboard.D = state;
             break;
+        case 'buy':
+            keyboard.W = state;
+            break;
+
         default:
             break;
     }
@@ -149,35 +188,44 @@ function updateKeyState(key, state) {
 
 document.getElementById('button-left').addEventListener('touchstart', function() {
     updateKeyState('left', true);
-});
+}, { passive: true });
 
 document.getElementById('button-left').addEventListener('touchend', function() {
     updateKeyState('left', false);
-});
+}, { passive: true });
 
 document.getElementById('button-right').addEventListener('touchstart', function() {
     updateKeyState('right', true);
-});
+}, { passive: true });
 
 document.getElementById('button-right').addEventListener('touchend', function() {
     updateKeyState('right', false);
-});
+}, { passive: true });
 
 document.getElementById('button-jump').addEventListener('touchstart', function() {
     updateKeyState('jump', true);
-});
+}, { passive: true });
 
 document.getElementById('button-jump').addEventListener('touchend', function() {
     updateKeyState('jump', false);
-});
+}, { passive: true });
 
 document.getElementById('button-throw').addEventListener('touchstart', function() {
     updateKeyState('throw', true);
-});
+}, { passive: true });
 
 document.getElementById('button-throw').addEventListener('touchend', function() {
     updateKeyState('throw', false);
-});
+}, { passive: true });
+
+document.getElementById('button-buy-bottle').addEventListener('touchstart', function() {
+    updateKeyState('buy', true);
+}, { passive: true });
+
+document.getElementById('button-buy-bottle').addEventListener('touchend', function() {
+    updateKeyState('buy', false);
+}, { passive: true });
+
 
 
 

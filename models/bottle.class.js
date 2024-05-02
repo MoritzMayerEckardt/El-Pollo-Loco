@@ -1,6 +1,7 @@
 class Bottle extends MovableObject {
+    
     y = 380;
-    x = 500 + Math.random() * 1500;
+    x = 500 + Math.random() * 3000;
     width = 60;
     height = 70;
 
@@ -10,7 +11,8 @@ class Bottle extends MovableObject {
     ]
 
     constructor() {
-        super().loadImage('img/8_coin/coin_1.png');
+        super();
+        this.loadImage(this.IMAGES[0]);
         this.loadImages(this.IMAGES);
         this.animate();
     }

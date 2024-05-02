@@ -15,11 +15,11 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
+
     throw_sound = new Audio('audio/throw.mp3');
    
     constructor(x, y) {
         super();
-        this.world = world; 
         this.loadImage(this.IMAGES_THROWING[3]);
         this.loadImages(this.IMAGES_THROWING);
         this.loadImages(this.IMAGES_SPLASHING);
@@ -32,13 +32,17 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.world.playAudio(this.throw_sound);
+        world.playAudio(this.throw_sound);
         this.wakeUp();
-        this.speedY = 20;
+        this.throwUpwards();
         this.applyGravity();
-        let throwDirection = this.world.character.otherDirection ? -1 : 1;
+        this.playThrowInterval();
+    }
+
+    playThrowInterval() {
+        let throwDirection = world.character.otherDirection ? -1 : 1;
         let throwInterval = setInterval(() => {
-            this.world.level.enemies.forEach(enemy => {
+            world.level.enemies.forEach(enemy => {
                 if (this.isColliding(enemy) && !(enemy instanceof Endboss)) {
                     clearInterval(throwInterval);
                     this.y = enemy.y;
@@ -50,24 +54,27 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 25);
     }
     
-    
     animate() {
-        let splashInterval = setInterval(() => {
-            if(this.checkHeight() < 321) {
+        let throwInterval = setInterval(() => {
+            if(this.isFlying()) {
                 this.playAnimation(this.IMAGES_THROWING);
             } else {
                 this.playAnimation(this.IMAGES_SPLASHING);
                 setTimeout(() => {
-                    clearInterval(splashInterval);
+                    clearInterval(throwInterval);
                 }, 240);
                 setTimeout(() => {
-                    this.world.throwableObjects.splice(0, 1);
+                    world.throwableObjects.splice(0, 1);
                 }, 80);
             }
         }, 60); 
     }
 
-    checkHeight() {
-        return this.y;
+    isFlying() {
+        return this.y < 321;
+    }
+
+    throwUpwards() {
+        this.speedY = 20;
     }
 }

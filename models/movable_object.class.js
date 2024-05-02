@@ -1,4 +1,5 @@
 class MovableObject extends DrawableObject {
+
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -6,7 +7,6 @@ class MovableObject extends DrawableObject {
     energy;
     lastHit = 0;
     long_idle_sound = new Audio('audio/long_idle.mp3');
-    fullscreenOn = false;
 
     applyGravity() {
         setInterval(() => {
@@ -18,7 +18,7 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if (this instanceof ThrowableObject) {      // Throwable Object should always fall
+        if (this instanceof ThrowableObject) {   
             return this.y < 400;
         } else {
             return this.y < 150;
@@ -38,7 +38,7 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height && 
             this.y + this.height > mo.y;
         let isCollidingFromRight = this.x + 10 <= mo.x + mo.width && 
-        this.x + 10 >= mo.x &&        
+            this.x + 10 >= mo.x &&        
             this.y < mo.y + mo.height && 
             this.y + this.height > mo.y;
         return isCollidingFromLeft || isCollidingFromRight;
@@ -75,9 +75,13 @@ class MovableObject extends DrawableObject {
         return this.energy <= 0;
     }
 
+    isAlive() {
+        return this.energy >= 5;
+    }
+
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit;   // difference in ms
-        timePassed = timePassed / 1000                          // difference in s
+        let timePassed = new Date().getTime() - this.lastHit;  
+        timePassed = timePassed / 1000                         
         return timePassed < 1;
     }
 
