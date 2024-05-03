@@ -1,13 +1,108 @@
+/**
+ * Represents the game world.
+ */
 class World {
+    /**
+     * Canvas element.
+     * @type {HTMLCanvasElement}
+     */
     canvas;
+
+    /**
+     * Canvas context.
+     * @type {CanvasRenderingContext2D}
+     */
     ctx;
+
+    /**
+     * Keyboard object.
+     * @type {Keyboard}
+     */
     keyboard;
+
+    /**
+     * Character object.
+     * @type {Character}
+     */
     character = new Character();
+
+    /**
+     * Level object.
+     * @type {Level}
+     */
     level = level1;
+
+    /**
+     * Camera x-coordinate.
+     * @type {number}
+     */
     camera_x = 0;
+
+    /**
+     * Array of throwable objects.
+     * @type {ThrowableObject[]}
+     */
     throwableObjects = [];
+
+    /**
+     * Current throwable object.
+     * @type {ThrowableObject}
+     */
     throwableObject;
 
+    /**
+     * Indicates whether the game is over.
+     * @type {boolean}
+     */
+    gameOver = false;
+
+    /**
+     * Indicates whether the game is won.
+     * @type {boolean}
+     */
+    gameWon = false;
+
+    /**
+     * Indicates whether the character is hit.
+     * @type {boolean}
+     */
+    isHit = false;
+
+    /**
+     * Indicates whether an object is being thrown.
+     * @type {boolean}
+     */
+    isThrowing = false;
+
+    /**
+     * Indicates whether a bottle is bought.
+     * @type {boolean}
+     */
+    isBought = false;
+
+    /**
+     * Indicates whether icons are shown.
+     * @type {boolean}
+     */
+    showIcons = true;
+
+    /**
+     * Indicates whether audio is on.
+     * @type {boolean}
+     */
+    audioOn = true;
+
+    /**
+     * Indicates whether fullscreen mode is on.
+     * @type {boolean}
+     */
+    fullscreenOn = false;
+
+    /**
+     * Constructs a new World.
+     * @param {HTMLCanvasElement} canvas - The canvas element.
+     * @param {Keyboard} keyboard - The keyboard object.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -23,18 +118,27 @@ class World {
         this.playRandomSound();      
     }
 
+    /**
+     * Sets up status bars.
+     */
     setStatusBars() {
         this.statusBarHealth = new StatusBarHealth();
-        this.statusBarCoin = new statusBarCoin();
+        this.statusBarCoin = new StatusBarCoin();
         this.statusBarBottle = new StatusBarBottle();
         this.statusBarEndboss = new StatusBarEndboss();
     }
 
+    /**
+     * Sets up icons.
+     */
     setIcons() {
         this.fullScreen = new FullScreen(this.canvas);
         this.audioHandler = new AudioHandler(this.canvas);
     }
 
+    /**
+     * Sets up audio objects.
+     */
     setAudioObjects() {
         this.coin_sound = new Audio('audio/coin.mp3');
         this.bottle_sound = new Audio('audio/bottle.mp3');
@@ -45,6 +149,9 @@ class World {
         this.endboss_hurt_sound = new Audio ('audio/endboss_hurt.mp3');
     }
 
+    /**
+     * Initializes boolean variables.
+     */
     setBoolean() {
         this.gameOver = false;
         this.gameWon = false;
@@ -56,6 +163,9 @@ class World {
         this.fullscreenOn = false;
     }
 
+    /**
+     * Main game loop.
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -66,6 +176,10 @@ class World {
         }, 50);
     }
 
+    /**
+     * Plays audio if audio is on.
+     * @param {Audio} audio - The audio object to play.
+     */
     playAudio(audio) {
         if (this.audioOn) {
             audio.play();
@@ -74,6 +188,9 @@ class World {
         }
     }
    
+    /**
+     * Checks for collisions between game objects.
+     */
     checkCollisions() {
         this.enemyAndCharacterCollide();
         this.enemyAndBottleCollide();
@@ -81,6 +198,9 @@ class World {
         this.collectBottle();
     }
 
+    /**
+     * Checks for leaving fullscreen mode.
+     */
     checkLeavingFullscreen() {
         if(!document.fullscreenElement) {
             this.fullscreenOn = false;
@@ -89,6 +209,9 @@ class World {
         }
     }
 
+    /**
+     * Removes dead enemies.
+     */
     checkDeadObjects() {
         setInterval(() => {
             this.level.enemies.forEach((enemy, index) => {
@@ -99,6 +222,9 @@ class World {
         }, 7500);
     }
 
+    /**
+     * Checks for game over or game won conditions.
+     */
     checkGameOver() {
         setInterval(() => {
             if(this.gameOver) {
@@ -109,6 +235,9 @@ class World {
         }, 3000); 
     }
 
+    /**
+     * Checks for cheat codes.
+     */
     checkCheats() {
         if(this.keyboard.X && this.keyboard.Y) {
             this.playAudio(this.coin_sound);
@@ -121,21 +250,39 @@ class World {
         }
     }       
     
+    /**
+     * Sets the percentage of a status bar to the specified value.
+     * @param {StatusBar} statusBar - The status bar object.
+     * @param {number} value - The value to set the percentage to.
+     */
     fullStatusBar(statusBar, value) {
         statusBar.percentage = value;
         statusBar.setPercentage(statusBar.percentage);
     }
 
+    /**
+     * Decreases the percentage of a status bar.
+     * @param {StatusBar} statusBar - The status bar object.
+     * @param {number} value - The value to decrease.
+     */
     decreaseStatusBar(statusBar, value) {
         statusBar.percentage -= value;
         statusBar.setPercentage(statusBar.percentage);
     }
 
+    /**
+     * Increases the percentage of a status bar.
+     * @param {StatusBar} statusBar - The status bar object.
+     * @param {number} value - The value to increase.
+     */
     increaseStatusBar(statusBar, value) {
         statusBar.percentage += value;
         statusBar.setPercentage(statusBar.percentage);
     }
 
+    /**
+     * Checks for buying bottles.
+     */
     checkBuyBottles() {
         if(this.keyboard.W && this.statusBarCoin.percentage >= 50 && !this.isBought) {
             this.playAudio(this.buy_bottle_sound);
@@ -148,6 +295,9 @@ class World {
         }
     }
 
+    /**
+     * Checks for throwing objects.
+     */
     checkThrowObjects() {
         if(this.keyboard.D && this.statusBarBottle.percentage > 0 && !this.isThrowing) {
             if(!this.character.otherDirection) {
@@ -164,6 +314,9 @@ class World {
         }
     }
 
+    /**
+     * Draws the game world.
+     */
     draw() {
         this.drawBackGround();
         this.drawFixedObjects();
@@ -174,6 +327,9 @@ class World {
         });
     }
 
+    /**
+     * Draws the background.
+     */
     drawBackGround() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -181,6 +337,9 @@ class World {
         this.addObjectsToMap(this.level.clouds);
     }
 
+    /**
+     * Draws fixed objects.
+     */
     drawFixedObjects() {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBarHealth);
@@ -194,6 +353,9 @@ class World {
         this.ctx.translate(this.camera_x, 0);
     }
 
+    /**
+     * Draws moving objects.
+     */
     drawMovingObjects() {
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
@@ -203,12 +365,20 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+     * Adds objects to the map.
+     * @param {DrawableObject[]} objects - The objects to add.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Adds an object to the map.
+     * @param {DrawableObject} mo - The object to add.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -219,18 +389,29 @@ class World {
         }
     }
 
+    /**
+     * Flips an image.
+     * @param {DrawableObject} mo - The object whose image to flip.
+     */
     flipImage(mo) {
         this.ctx.save();
-        this.ctx.translate(mo.width, 0);        // verschiebt das Objekt um die Breite des jeweiligen Elements
-        this.ctx.scale(-1, 1);                  // spiegelt das Objekt an der y-Achse
-        mo.x = mo.x * -1;                       // dreht die Richtung der x-Achse um 180 Grad
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
     }
 
+    /**
+     * Flips an image back.
+     * @param {DrawableObject} mo - The object whose image to flip back.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+    /**
+     * Collects bottles.
+     */
     collectBottle() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
@@ -241,6 +422,9 @@ class World {
         });
     }
 
+    /**
+     * Collects coins.
+     */
     collectCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -251,6 +435,9 @@ class World {
         });
     }
 
+    /**
+     * Checks for collisions between enemies and throwable objects.
+     */
     enemyAndBottleCollide() {
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
@@ -266,6 +453,9 @@ class World {
         });
     }
 
+    /**
+     * Checks for collisions between the character and enemies.
+     */
     enemyAndCharacterCollide() {
         this.level.enemies.forEach((enemy) => {
             let enemyIsAlive = enemy.energy >= 5;
@@ -277,12 +467,20 @@ class World {
         });
     }
 
+    /**
+     * Handles character killing enemy.
+     * @param {Enemy} enemy - The enemy that is killed.
+     */
     characterKillsEnemy(enemy) {
-            enemy.hit();
-            this.playAudio(this.chicken_dead_sound);
-            this.character.jump();
+        enemy.hit();
+        this.playAudio(this.chicken_dead_sound);
+        this.character.jump();
     }
 
+    /**
+     * Handles enemy hurting character.
+     * @param {Enemy} enemy - The enemy that hurts the character.
+     */
     enemyHurtsCharacter(enemy) {
         this.playAudio(this.hurt_sound);
         this.character.isHurt();
@@ -298,6 +496,9 @@ class World {
         }, 500);
     }
 
+    /**
+     * Plays a random sound at intervals.
+     */
     playRandomSound() {
         setInterval(() => {
             this.playAudio(this.random_sound)

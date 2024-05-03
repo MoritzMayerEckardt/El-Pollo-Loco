@@ -47,6 +47,15 @@ body {
     background: url('img/5_background/first_half_background.png');
     background-size: cover;
     position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.you-won-text {
+    font-size: 96px;
+    text-align: center;
+    color: #FFD800;
+    text-shadow: 4px 2px 2px #A02204;
 }
 
 .img-game-over {
@@ -97,6 +106,7 @@ canvas:hover {
 
 .play-again-button {
     color: #FFD800;
+    text-shadow: 4px 2px 2px #CE6524;
     font-size: 32px;
     font-weight: 700;
     background: none;
@@ -299,7 +309,7 @@ dl {
         transform: rotate(0deg);
     }
     50% {
-        transform: rotate(-90deg);
+        transform: rotate(90deg);
     }
     100% {
         transform: rotate(0deg);
@@ -368,9 +378,10 @@ dl {
         .turn-device {
             display: block;
         }
+        .play-button {
+            display: none;
+        }
     }
-
-
 }
 
 

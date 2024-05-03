@@ -1,43 +1,112 @@
+/**
+ * Represents the canvas element.
+ * @type {HTMLCanvasElement}
+ */
 let canvas;
+
+/**
+ * Represents the game world.
+ * @type {World}
+ */
 let world;
+
+/**
+ * Represents the keyboard input handler.
+ * @type {Keyboard}
+ */
 let keyboard = new Keyboard();
+
+/**
+ * Represents the index of the current level.
+ * @type {number}
+ */
 let i = 1;
 
+/**
+ * Initializes the game by setting up the canvas and background image.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     canvas.style.backgroundImage = 'url("img/9_intro_outro_screens/start/startscreen_1.png")';
 }
 
+/**
+ * Starts the game by initializing the level, world, and connecting them together.
+ */
 function startGame() {
-    window[`initLevel${i}`]();
+    initLevel();
     setWorld();
-    world.level = window[`level${i}`];
-    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
-    responsiveButtonsContainer.classList.remove('d-none');
-    responsiveButtonsContainer.style.display = 'flex';
-    let playButton = document.getElementById('play');
-    playButton.classList.add('d-none');
+    connectLevelToWorld();
+    hideResponsiveScreen();
 }
 
+/**
+ * Restarts the game when the player chooses to play again.
+ */
+function playAgain() {
+    showCanvas();
+    hideOtherScreens();
+    init();
+    startGame();
+}
+
+/**
+ * Proceeds to the next level of the game.
+ */
+function nextLevel() {
+    setNextLevel();
+    initLevel();
+    setWorld();
+    connectLevelToWorld();
+    increaseSpeedOfEnemies();
+    showCanvas();
+    hideOtherScreens();
+}
+
+/**
+ * Handles the game loss scenario.
+ */
+function gameLost() {
+    stopGame();
+    closeFullscreen();
+    hideCanvas();
+    showYouLostScreen();
+}
+
+/**
+ * Handles the game win scenario.
+ */
+function gameWon() {
+    stopGame();
+    closeFullscreen();
+    hideCanvas();
+    showYouWonScreen();
+}
+
+/**
+ * Sets up the game world.
+ */
 function setWorld() {
     world = new World(canvas, keyboard);
 }
 
-function nextLevel() {
-    setNextLevel();
-    window[`initLevel${i}`]();
-    setWorld();
+/**
+ * Connects the current level to the game world.
+ */
+function connectLevelToWorld() {
     world.level = window[`level${i}`];
-    canvas = document.getElementById('canvas');
-    canvas.classList.remove('d-none');
-    let gameOverContainer = document.getElementById('game-over');
-    let youWonContainer = document.getElementById('you-won');
-    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
-    responsiveButtonsContainer.style.display = 'flex';
-    gameOverContainer.classList.add('d-none');
-    youWonContainer.classList.add('d-none');
 }
 
+/**
+ * Initializes the current level.
+ */
+function initLevel() {
+    window[`initLevel${i}`]();
+}
+
+/**
+ * Sets the index for the next level.
+ */
 function setNextLevel() {
     if (i <= 3) {
         i++
@@ -46,187 +115,102 @@ function setNextLevel() {
     }
 }
 
-function gameLost() {
-    stopGame();
-    closeFullscreen();
-    canvas = document.getElementById('canvas');
-    canvas.classList.add('d-none');
-    let gameOverContainer = document.getElementById('game-over');
-    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
-    gameOverContainer.classList.remove('d-none');
-    responsiveButtonsContainer.style.display = 'none';
-}
-
-function gameWon() {
-    stopGame();
-    closeFullscreen();
-    canvas = document.getElementById('canvas');
-    canvas.classList.add('d-none');
-    let gameOverContainer = document.getElementById('you-won');
-    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
-    gameOverContainer.classList.remove('d-none');
-    responsiveButtonsContainer.style.display = 'none';
-    gameOverContainer.style.filter = 'brightness(80%)';
-}
-
+/**
+ * Stops the game by clearing all intervals.
+ */
 function stopGame() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/**
+ * Reloads the start page of the game.
+ */
 function loadStartPage() {
     location.reload();
 }
 
-function closeFullscreen() {
-    if (document.fullscreenElement) {
-        document.exitFullscreen();
-    }
-}
-
-function playAgain() {
-    canvas = document.getElementById('canvas');
-    canvas.classList.remove('d-none');
+/**
+ * Hides other screens and shows the canvas.
+ */
+function hideOtherScreens() {
     let gameOverContainer = document.getElementById('game-over');
     let youWonContainer = document.getElementById('you-won');
     let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
     responsiveButtonsContainer.style.display = 'flex';
     gameOverContainer.classList.add('d-none');
     youWonContainer.classList.add('d-none');
-    init();
-    startGame();
+    youWonContainer.classList.remove('flex');
 }
 
-window.addEventListener("keydown", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
-    if (e.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    if (e.keyCode == 68) {
-        keyboard.D = true;
-    }
-    if (e.keyCode == 87) {
-        keyboard.W = true;
-    } 
-    if (e.keyCode == 88) {
-        keyboard.X = true;
-    }
-    if (e.keyCode == 89) {
-        keyboard.Y = true;
-    }
-    if (e.keyCode == 27) {
-        keyboard.ESC = true;
-    }
-}); 
+/**
+ * Hides the responsive screen.
+ */
+function hideResponsiveScreen() {
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    responsiveButtonsContainer.classList.remove('d-none');
+    responsiveButtonsContainer.style.display = 'flex';
+    let playButton = document.getElementById('play');
+    playButton.classList.add('d-none');
+}
 
-window.addEventListener("keyup", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-    if (e.keyCode == 68) {
-        keyboard.D = false;
-    }
-    if (e.keyCode == 87) {
-        keyboard.W = false;
-    }
-    if (e.keyCode == 88) {
-        keyboard.X = false;
-    }
-    if (e.keyCode == 89) {
-        keyboard.Y = false;
-    }
-    if (e.keyCode == 27) {
-        keyboard.ESC = false;
-    }
-});
+/**
+ * Shows the game canvas.
+ */
+function showCanvas() {
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove('d-none');
+}
 
+/**
+ * Hides the game canvas.
+ */
+function hideCanvas() {
+    canvas = document.getElementById('canvas');
+    canvas.classList.add('d-none');
+}
 
-function updateKeyState(key, state) {
-    switch (key) {
-        case 'left':
-            keyboard.LEFT = state;
-            break;
-        case 'right':
-            keyboard.RIGHT = state;
-            break;
-        case 'jump':
-            keyboard.SPACE = state;
-            break;
-        case 'throw':
-            keyboard.D = state;
-            break;
-        case 'buy':
-            keyboard.W = state;
-            break;
+/**
+ * Shows the game over screen.
+ */
+function showYouLostScreen() {
+    let gameOverContainer = document.getElementById('game-over');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    gameOverContainer.classList.remove('d-none');
+    responsiveButtonsContainer.style.display = 'none';
+}
 
-        default:
-            break;
+/**
+ * Shows the game won screen.
+ */
+function showYouWonScreen() {
+    let gameOverContainer = document.getElementById('you-won');
+    let responsiveButtonsContainer = document.getElementById('responsive-buttons-container');
+    gameOverContainer.classList.remove('d-none');
+    gameOverContainer.classList.add('flex');
+    responsiveButtonsContainer.style.display = 'none';
+}
+
+/**
+ * Exits fullscreen mode if active.
+ */
+function closeFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
     }
 }
 
-document.getElementById('button-left').addEventListener('touchstart', function() {
-    updateKeyState('left', true);
-}, { passive: true });
-
-document.getElementById('button-left').addEventListener('touchend', function() {
-    updateKeyState('left', false);
-}, { passive: true });
-
-document.getElementById('button-right').addEventListener('touchstart', function() {
-    updateKeyState('right', true);
-}, { passive: true });
-
-document.getElementById('button-right').addEventListener('touchend', function() {
-    updateKeyState('right', false);
-}, { passive: true });
-
-document.getElementById('button-jump').addEventListener('touchstart', function() {
-    updateKeyState('jump', true);
-}, { passive: true });
-
-document.getElementById('button-jump').addEventListener('touchend', function() {
-    updateKeyState('jump', false);
-}, { passive: true });
-
-document.getElementById('button-throw').addEventListener('touchstart', function() {
-    updateKeyState('throw', true);
-}, { passive: true });
-
-document.getElementById('button-throw').addEventListener('touchend', function() {
-    updateKeyState('throw', false);
-}, { passive: true });
-
-document.getElementById('button-buy-bottle').addEventListener('touchstart', function() {
-    updateKeyState('buy', true);
-}, { passive: true });
-
-document.getElementById('button-buy-bottle').addEventListener('touchend', function() {
-    updateKeyState('buy', false);
-}, { passive: true });
-
-
-
-
-
+/**
+ * Increases the speed of enemies in the game.
+ * For chickens and small chickens, it increases their speed by 0.2 and triggers a jump.
+ * For end bosses, it increases their speed by 5.
+ */
+function increaseSpeedOfEnemies() {
+    world.level.enemies.forEach(enemy => {
+        if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            enemy.speed += 0.2;
+            enemy.jump();
+        } else if (enemy instanceof Endboss) {
+            enemy.speed += 5;
+        }
+    });
+}
