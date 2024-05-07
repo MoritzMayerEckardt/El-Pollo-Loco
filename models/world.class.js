@@ -343,7 +343,7 @@ class World {
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarEndboss);
-        if(!this.fullscreenOn && window.innerWidth >= 1000) {
+        if(!this.fullscreenOn && window.innerWidth >= 940) {
             this.addToMap(this.fullScreen);
             this.addToMap(this.audioHandler);
         }
