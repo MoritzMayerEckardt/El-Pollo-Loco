@@ -48,10 +48,11 @@ class AudioHandler extends MovableObject {
     /**
      * Constructs a new instance of AudioHandler.
      */
-    constructor() {
+    constructor(canvas, audioOn) {
         super();
         this.canvas = canvas;
-        this.loadImage('img/audio_on.svg');
+        this.audioOn = audioOn;
+        this.loadImage(this.audioOn ? this.audioOnImage : this.audioOffImage);
         this.canvas.addEventListener('click', () => this.handleClick());
     }
 
@@ -78,12 +79,15 @@ class AudioHandler extends MovableObject {
      * Toggles the audio on and off.
      */
     turnOnAndOffAudio() {
-        if (world.audioOn) {
+        if (this.audioOn) {
             world.audioOn = false;
+            this.audioOn = false;
             this.loadImage(this.audioOffImage);
         } else {
             world.audioOn = true;
+            this.audioOn = true;
             this.loadImage(this.audioOnImage);
         }
+        localStorage.setItem('audioOn', JSON.stringify(world.audioOn));
     }
 }

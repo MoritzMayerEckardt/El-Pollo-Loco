@@ -37,7 +37,7 @@ class Endboss extends MovableObject {
      * The speed of the end boss character.
      * @type {number}
      */
-    speed = 15;
+    speed = 40;
 
     /**
      * Images for the alert animation.
@@ -128,10 +128,11 @@ class Endboss extends MovableObject {
         let endbossInterval = setInterval(() => {
             if (this.energy == 0) {
                 this.achieveVictory(endbossInterval);
-            } else if(this.isHurt()) {
+            } else if(this.isHurt() && this.energy >= 120) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.energy <= 120) {
+            } else if (this.energy <= 140) {
                 this.walkLeft();
+                this.speed += 0.5;
             } else if(this.energy <= 160) {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else {

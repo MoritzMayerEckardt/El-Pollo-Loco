@@ -50,6 +50,10 @@ class World {
      */
     throwableObject;
 
+
+    audioOn = JSON.parse(localStorage.getItem('audioOn'));
+
+
     /**
      * Indicates whether the game is over.
      * @type {boolean}
@@ -87,12 +91,6 @@ class World {
     showIcons = true;
 
     /**
-     * Indicates whether audio is on.
-     * @type {boolean}
-     */
-    audioOn = true;
-
-    /**
      * Indicates whether fullscreen mode is on.
      * @type {boolean}
      */
@@ -107,10 +105,10 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.setBoolean();
         this.setIcons();
         this.setStatusBars();
         this.setAudioObjects();
-        this.setBoolean();
         this.draw();
         this.run();
         this.checkGameOver();
@@ -133,7 +131,7 @@ class World {
      */
     setIcons() {
         this.fullScreen = new FullScreen(this.canvas);
-        this.audioHandler = new AudioHandler(this.canvas);
+        this.audioHandler = new AudioHandler(this.canvas, this.audioOn);
     }
 
     /**
@@ -159,7 +157,6 @@ class World {
         this.isThrowing = false;
         this.isBought = false;
         this.showIcons = true;
-        this.audioOn = true; 
         this.fullscreenOn = false;
     }
 

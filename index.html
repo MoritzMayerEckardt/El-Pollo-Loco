@@ -20,8 +20,8 @@
     <script src="models/status_bar_coin.class.js"></script>
     <script src="models/status_bar_bottle.class.js"></script>
     <script src="models/status_bar_endboss.class.js"></script>
-    <script src="models/audio_handler.class.js"></script>
     <script src="models/fullscreen.class.js"></script>
+    <script src="models/audio_handler.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/background_object.class.js"></script>
     <script src="models/keyboard.class.js"></script>
@@ -81,14 +81,16 @@
             <span>D = Throw Bottle</span>
             <span>W = Buy Bottle<br>(5 coins/unit)</span>
         </div>
-        <div id="explanation-responsive" class="explanation-responsive">
-            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/left.png" alt=""></div><span>Walk Left</span></div>
-            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/right.png" alt=""></div><span>Walk Right</span></div>    
-            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"> <img class="img-responsive-button-explanation" src="img/bottle.png" alt=""></div><span>Buy Bottle (5 coins / unit)</span></div>    
-            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/up.png" alt=""></div><span>Jump</span></div> 
-            <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/throw.png" alt=""></div><span>Throw Bottle</span></div> 
+        <div class="turn-device-container">
+            <div class="turn-device">Turn your devide to play</div>
+            <div class="explanation-responsive">
+                <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/left.png" alt=""></div><span style="color: #A02204">Walk Left</span></div>
+                <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/right.png" alt=""></div><span style="color: #A02204">Walk Right</span></div>    
+                <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"> <img class="img-responsive-button-explanation" src="img/bottle.png" alt=""></div><span style="color: #A02204">Buy Bottle (5 coins / unit)</span></div>    
+                <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/up.png" alt=""></div><span style="color: #A02204">Jump</span></div> 
+                <div class="flex" style="gap: 16px; margin-bottom: 8px;"><div class="button-responsive-explanation"><img class="img-responsive-button-explanation" src="img/throw.png" alt=""></div><span style="color: #A02204">Throw Bottle</span></div> 
+            </div>
         </div>
-        <div class="turn-device">Turn your devide to play</div>
     </div>
 </body>
 <script src="js/keyboard.js"></script>

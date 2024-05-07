@@ -291,9 +291,9 @@ dl {
 }
 
 .turn-device {
-    display: none;
     position: absolute;
-    top: 18%;
+    top: 20%;
+    left: 20%;
     font-size: 40px;
     text-align: center;
     animation: rotateAnimation 3.5s linear infinite;
@@ -302,6 +302,17 @@ dl {
     text-shadow: 1px 1px 1px #CE6524;
     width: 240px;
     }
+
+.turn-device-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background: black;
+}
     
 
 @keyframes rotateAnimation {
@@ -325,7 +336,7 @@ dl {
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media only screen and (max-width: 932px) {
     .top-container {
         width: 100%;
         position: absolute;
@@ -365,8 +376,11 @@ dl {
         display: block;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 831px) {
         .responsive-buttons-container {
+            display: none;
+        }
+        .responsive-buttons-position-helper {
             display: none;
         }
         .explanation {
@@ -375,12 +389,16 @@ dl {
         .explanation-responsive {
             display: block;
         }
-        .turn-device {
-            display: block;
-        }
         .play-button {
             display: none;
         }
+        .turn-device-container {
+            display: block;
+        }
+    }
+
+    @media (max-height: 400px) {
+        
     }
 }
 
